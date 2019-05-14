@@ -27,7 +27,7 @@ async function check_stock(id,quantity,data){
                         db.query(`UPDATE products SET? WHERE?`,[{stock_quantity:data[id].stock_quantity-quantity},{item_id:id}],(e,r)=>{
                             if(e){
                                 console.log(e)
-                                reject()
+                                reject('The inquiry went wrong')
                             }
                             else{
                                 console.log(`the order placed, the total price is ${parseInt(quantity)*parseInt(data[parseInt(id)].price)}`)
@@ -48,7 +48,8 @@ async function check_stock(id,quantity,data){
                     }
                     else{
                         console.log(`There are not enough items in the stock`)
-                        reject()
+                        db.end()
+                        reject('The inquiry went wrong')
                     }
                 }
 
