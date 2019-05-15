@@ -2,6 +2,8 @@ const {createConnection}=require('mysql2')
 const inquirer=require('inquirer')
  require('dotenv').config()
  let pass=process.env.mysql_password
+//describe and initialize the packages
+
  let data
 const db=createConnection({
     host:'localhost',
@@ -9,6 +11,7 @@ const db=createConnection({
     password:pass,
     database:'bamazon'
 })
+//connect to myseql
 db.connect(e=>{
     if(e){console.log(e)}
     else{
@@ -16,6 +19,7 @@ db.connect(e=>{
 }
 })
 
+//writing the bluprint of the function which checks the stock availability
 async function check_stock(id,quantity,data){
     console.log(`there are ${data[parseInt(id)].stock_quantity} ${data[parseInt(id)].product_name}s left`)
     const check=await new Promise((resolve,reject)=>{
@@ -55,6 +59,8 @@ async function check_stock(id,quantity,data){
 
     })
 }
+
+// the main function that gets the order form the user
 const getorder=_=>{
 
     db.query('SELECT *FROM products',(e,data)=>{
